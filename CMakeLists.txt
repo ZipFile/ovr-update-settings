@@ -11,11 +11,15 @@ endif()
 
 project ("ovr-update-settings")
 
+add_subdirectory(openvr)
+include_directories(openvr/headers)
+find_library(OPENVR_LIB openvr_api PATH_SUFFIXES openvr_api)
+
 # Add source to this project's executable.
-add_executable (ovr-update-settings "ovr-update-settings.cpp" "ovr-update-settings.h")
+add_executable (ovr-update-settings "main.cpp" "main.h" "ops.cpp" "ops.h")
+
+target_link_libraries(ovr-update-settings ${OPENVR_LIB})
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET ovr-update-settings PROPERTY CXX_STANDARD 20)
 endif()
-
-# TODO: Add tests and install targets if needed.
